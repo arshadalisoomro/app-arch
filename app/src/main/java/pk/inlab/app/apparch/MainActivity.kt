@@ -1,11 +1,11 @@
 package pk.inlab.app.apparch
 
 import android.os.Bundle
-import android.util.Log
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
@@ -22,16 +22,23 @@ class MainActivity : AppCompatActivity() {
         // View binding kotlin synthetic
         tv_msg.text = "Welcome to App"
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
+//        fab.setOnClickListener { view ->
+//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                .setAction("Action", null).show()
+//        }
+
+        // with it anonymous argument
+        fab.setOnClickListener { fabClickHandler() }
 
         // AppCompat Class implements Lifecycle Owner and
         // lifecycle property comes from there now add custom
         // Lifecycle Observer AppLifecycleObserver()
         lifecycle.addObserver(AppLifecycleObserver())
 
+    }
+
+    private fun fabClickHandler() {
+        Toast.makeText(this@MainActivity, "Replace with your own action", Toast.LENGTH_LONG).show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
