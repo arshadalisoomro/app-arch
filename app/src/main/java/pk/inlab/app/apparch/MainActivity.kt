@@ -22,33 +22,11 @@ class MainActivity : AppCompatActivity() {
                 .setAction("Action", null).show()
         }
 
-        Log.i(LOG_TAG, "OnCreate()")
+        // AppCompat Class implements Lifecycle Owner and
+        // lifecycle property comes from there now add custom
+        // Lifecycle Observer AppLifecycleObserver()
+        lifecycle.addObserver(AppLifecycleObserver())
 
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.i(LOG_TAG, "OnStart()")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.i(LOG_TAG, "OnResume()")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.i(LOG_TAG, "OnPause()")
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.i(LOG_TAG, "OnStop()")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.i(LOG_TAG, "OnDestroy()")
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
