@@ -9,6 +9,7 @@ import android.widget.Toast
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import pk.inlab.app.apparch.util.DiceHelper
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,16 +20,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        // View binding kotlin synthetic
-        tv_msg.text = "Welcome to App"
-
-//        fab.setOnClickListener { view ->
-//            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                .setAction("Action", null).show()
-//        }
-
         // with it anonymous argument
-        fab.setOnClickListener { fabClickHandler() }
+        btn_roll.text = "Roll'em"
+        btn_roll.setOnClickListener { fabClickHandler() }
 
         // AppCompat Class implements Lifecycle Owner and
         // lifecycle property comes from there now add custom
@@ -38,7 +32,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fabClickHandler() {
-        Toast.makeText(this@MainActivity, "Replace with your own action", Toast.LENGTH_LONG).show()
+
+        val drawableResource = when(DiceHelper.getDie()){
+            1 -> R.drawable.dice_1
+            2 -> R.drawable.dice_2
+            3 -> R.drawable.dice_3
+            4 -> R.drawable.dice_4
+            5 -> R.drawable.dice_5
+            else -> R.drawable.dice_6
+        }
+        iv_dice.setImageResource(drawableResource)
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
