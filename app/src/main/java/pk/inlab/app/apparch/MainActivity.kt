@@ -1,30 +1,42 @@
 package pk.inlab.app.apparch
 
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
-import pk.inlab.app.apparch.util.DiceHelper
-import kotlin.properties.Delegates
+import pk.inlab.app.apparch.viewmodel.DiceViewModel
 
 class MainActivity : AppCompatActivity() {
 
-    private val LOG_TAG: String = "ArchKotlin"
-    private var sum: Int = 0
+    // Using view model
+    private lateinit var viewModel: DiceViewModel
 
+    private val LOG_TAG: String = "ArchKotlin"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        //Using view model
+        viewModel = ViewModelProviders.of(this).get(DiceViewModel::class.java)
+        viewModel.sum.observe(this, Observer {
+            tv_dice_score.text = "Your score is $it"
+        })
+
+        viewModel.valueInt.observe(this, Observer {
+            updateDisplay(it)
+        })
+
         // with it anonymous argument
         btn_roll.text = "Roll'em"
-        btn_roll.setOnClickListener { fabClickHandler() }
+        btn_roll.setOnClickListener {
+            viewModel.rollDice()
+        }
 
         // AppCompat Class implements Lifecycle Owner and
         // lifecycle property comes from there now add custom
@@ -33,8 +45,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun fabClickHandler() {
-        val randInt: Int = DiceHelper.getDie()
+    private fun updateDisplay(randInt: Int) {
         val drawableResource = when(randInt){
             1 -> R.drawable.dice_1
             2 -> R.drawable.dice_2
@@ -44,10 +55,6 @@ class MainActivity : AppCompatActivity() {
             else -> R.drawable.dice_6
         }
         iv_dice.setImageResource(drawableResource)
-        sum += randInt
-
-        tv_dice_score.text = "Your score is ${sum}"
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
