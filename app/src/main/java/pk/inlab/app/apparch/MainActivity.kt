@@ -10,10 +10,12 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import pk.inlab.app.apparch.util.DiceHelper
+import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity() {
 
     private val LOG_TAG: String = "ArchKotlin"
+    private var sum: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,8 +34,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fabClickHandler() {
-
-        val drawableResource = when(DiceHelper.getDie()){
+        val randInt: Int = DiceHelper.getDie()
+        val drawableResource = when(randInt){
             1 -> R.drawable.dice_1
             2 -> R.drawable.dice_2
             3 -> R.drawable.dice_3
@@ -42,6 +44,9 @@ class MainActivity : AppCompatActivity() {
             else -> R.drawable.dice_6
         }
         iv_dice.setImageResource(drawableResource)
+        sum += randInt
+
+        tv_dice_score.text = "Your score is ${sum}"
 
     }
 
