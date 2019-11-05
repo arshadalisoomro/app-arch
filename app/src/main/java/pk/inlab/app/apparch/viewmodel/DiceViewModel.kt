@@ -26,17 +26,12 @@ class DiceViewModel(app: Application): AndroidViewModel(app) {
         sum.value = sum.value?.plus(valueInt.value!!)
 
         // check if continue or not
-        if (roundCounter != 6){
-            // reset
-            isCont.value = true
-        } else {
-            isCont.value = false
-            valueInt.value = 0
-        }
+        isCont.value = roundCounter != 6
     }
 
-    fun resetSum() {
+    fun resetValues() {
         sum.value = 0
+        valueInt.value = 0
     }
 
 

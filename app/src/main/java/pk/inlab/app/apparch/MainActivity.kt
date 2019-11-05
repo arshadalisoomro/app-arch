@@ -48,8 +48,8 @@ class MainActivity : AppCompatActivity(), ResetObserver {
             viewModel.sum.removeObservers(this)
             viewModel.valueInt.removeObservers(this)
 
-            // re-set sum in ViewModel
-            viewModel.resetSum()
+            // re-set random value & sum in ViewModel
+            viewModel.resetValues()
 
             // re-set round counter
             roundCounter = 0
